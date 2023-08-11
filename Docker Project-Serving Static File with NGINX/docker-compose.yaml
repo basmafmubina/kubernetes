@@ -1,0 +1,45 @@
+version: "3.6"
+
+services:
+  #phpfpm:
+  #  image: wordpress:fpm-alpine
+  #  volumes:
+  #    - type: volume
+  #      source: bfmvolume
+  #      target: /var/www/html
+  #      volume:
+  #        nocopy: false
+  #  environment:
+  #    WORDPRESS_DB_HOST: "10.0.0.1"
+  #    WORDPRESS_DB_USER: basma
+  #    WORDPRESS_DB_PASSWORD: Q1w2e3qwe
+  #    WORDPRESS_DB_NAME: wp_basma
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx2.dockerfile
+    working_dir: /var/www
+    image: basmafathan:nginx
+    #environment:
+    #  $DOC=
+    volumes:
+      - type: volume
+        source: /home/ubuntu/project/basma/nginx-wp/nginx/index.html
+        target: /var/www/html
+        volume: 
+          nocopy: false
+    #env_file:
+      #- nginx.env
+      #- type: bind
+      #  source: /home/ubuntu/project/nginx-wp/default.conf
+      #  target: /etc/nginx/conf.d/default.conf
+      # - bfmvolume:/var/www/html/
+      # - /home/ubuntu/project/nginx-wp/default.conf:/etc/nginx/conf.d
+    ports:
+     - 0.0.0.0:5000:80
+    #depends_on:
+    # - "phpfpm"
+
+#volumes:
+#  bfmvolume:

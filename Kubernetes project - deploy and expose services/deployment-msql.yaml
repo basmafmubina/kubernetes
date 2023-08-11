@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-mysql
+  labels:
+    app: nginx-proxy-manager
+spec:
+  selector:
+    matchLabels:
+      app: nginx-proxy-manager
+      tier: mysql
+  template:
+    metadata:
+      labels:
+        app: nginx-proxy-manager
+        tier: mysql
+    spec:
+      containers:
+      - image: jc21/mariadb-aria:latest
+        name: mysql
+        envFrom:
+          - configMapRef:
+              name: config-npm
+              optional: false
+        ports:
+        - containerPort: 3306
+
+      
+
+

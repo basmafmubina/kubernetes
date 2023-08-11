@@ -1,0 +1,42 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata: 
+  name: my-spreed-webrtc
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mys-spreed-webrtc
+  minReplicas: 1
+  maxReplicas: 4
+  metrics:
+  - type: Resource
+    resource: 
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+  - type: Pods
+    pods:
+      metric:
+        name: requests-per-second
+      describedObject:
+        apiVersion: networking.k8s.io/v1beta1
+        kind: Ingress
+        name: main-route
+      target:
+        type: value
+        value: 10k
+status:
+  observedGeneration: 1
+  currentReplicas: 1
+  desiredReplicas: 1
+  currentMetrics:
+  - type: Resource
+    resource:
+      name: cpu
+    current:
+      averageUtilization: 0
+      averageValue: 0
+  - type: Object
+    object:

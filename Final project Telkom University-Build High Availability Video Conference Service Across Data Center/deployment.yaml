@@ -1,0 +1,28 @@
+ApiVersion: aut
+kind: Deployment
+metadata:
+  labels:
+    run: my-spreed-webrtc
+  name: my-spreed-webrtc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: my-spreed-webrtc
+  template:
+    metadata:
+      labels:
+        run: my-spreed-webrtc
+    spec:
+      containers:
+      - image: spreed/webrtc:latest
+        name: my-spreed-webrtc
+        ports:
+        - containerPort: 8443
+        resources:
+          requests:
+            cpu: 200m
+            memory: 200Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
